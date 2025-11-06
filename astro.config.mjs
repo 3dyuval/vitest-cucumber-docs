@@ -123,6 +123,10 @@ export default defineConfig({
                             label: "Load feature from text",
                             slug: "features/load-feature-from-text",
                         },
+                        {
+                            label: "Tests without feature file",
+                            slug: "features/define-feature",
+                        },
                     ],
                 },
             ],
