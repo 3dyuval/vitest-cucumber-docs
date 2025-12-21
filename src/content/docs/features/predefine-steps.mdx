@@ -29,10 +29,10 @@ Feature: use predefined steps in unit tests
 
 ## Intro
 
-In all examples with `defineSteps`, you can define 
+In all examples with `defineSteps`, you can define
 all step types: `Given`, `When`, `Then`, `And` and `But`.
 
-Currently you can define a step never used in scenario, **vitest-cucumber** 
+Currently you can define a step never used in scenario, **vitest-cucumber**
 doesn't throw an error.
 
 **vitest-cucumber** still throw an error if steps are missing in scenario and background.
@@ -176,21 +176,15 @@ f.Background((b) => {
 })
 ```
 
+## Step expression
+
+**Since `6.2.0` predefined step can use expression.**. For old version it's a limit.
+
 ## Limits
 
-#### Context 
+#### Context
 
 They are some limits with [`context`](https://vitest-cucumber.miceli.click/features/structure-context) :
 - in globally defined steps you can't access to `Feature`, `Rule` and `Scenario` context
 - in feature defined steps same for `Rule` and `Scenario` context
 - in rule defined step you can't access to `Scenario` context
-
-#### Step expression
-
-In `defineSteps`, currently you can't define step with expression like : 
-
-```typescript
-Given('I use {string} framework', () => {})
-```
-
-I'm checking if I can't fix this ;).
