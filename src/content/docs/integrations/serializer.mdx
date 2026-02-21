@@ -1,0 +1,145 @@
+---
+title: Serializer
+description: vitest-cucumber serializer
+---
+
+**vitest-cucumber** provides a serializer that converts parsed `Feature` objects into plain JSON data. You can use it to generate documentation or build tooling on top of your *feature* files.
+
+## Install
+
+~~~bash
+npm install @amiceli/vitest-cucumber --save-dev
+~~~
+
+## From raw file content
+
+`serializeFeatureFile` parses and converts a *feature* file in one call:
+
+~~~typescript
+import { serializeFeatureFile } from "@amiceli/vitest-cucumber/serializer";
+
+const content = `
+Feature: Login
+  Users should be able to log in
+
+  Scenario: Valid credentials
+    Given a registered user
+    When they enter valid credentials
+    Then they are logged in
+`;
+
+const data = serializeFeatureFile(content);
+// { name: "Login", description: "Users should be able to log in", ... }
+~~~
+
+You can pass `{ language: "fr" }` as the second argument for non-English *feature* files.
+
+## From a parsed `Feature` object
+
+If you already have a parsed `Feature` instance, you can use `serializeFeature` directly:
+
+~~~typescript
+import { GherkinParser } from "@amiceli/vitest-cucumber";
+import { serializeFeature } from "@amiceli/vitest-cucumber/serializer";
+
+const parser = new GherkinParser({ language: "en" });
+for (const line of lines) {
+  parser.addLine(line);
+}
+const [feature] = parser.finish();
+const data = serializeFeature(feature);
+~~~
+
+## Exported functions
+
+| Function | Input | Description |
+|----------|-------|-------------|
+| `serializeFeatureFile(content, options?)` | `string` | Parses and converts a *feature* file in one call |
+| `serializeFeature(feature)` | `Feature` | Converts a parsed `Feature` object |
+| `serializeScenarii(scenarii)` | `Scenario[]` | Converts an array of `Scenario` |
+| `serializeScenario(scenario)` | `Scenario` | Converts a single `Scenario` or `Scenario Outline` |
+| `serializeStep(step)` | `Step` | Converts a single step |
+| `serializeBackground(background)` | `Background \| null` | Converts a `Background` (returns `null` if absent) |
+| `serializeRules(rules)` | `Rule[]` | Converts an array of `Rule` |
+| `serializeRule(rule)` | `Rule` | Converts a single `Rule` |
+
+## Types
+
+All types are exported and map to [Gherkin keywords](https://cucumber.io/docs/gherkin/reference/).
+
+### [`SerializedFeature`](https://cucumber.io/docs/gherkin/reference#feature)
+
+~~~typescript
+interface SerializedFeature {
+  name: string
+  keyword: string        // e.g. "Feature: Login"
+  description: string    // description lines between Feature and first Scenario
+  tags: string[]
+  background: SerializedBackground
+  scenarii: SerializedScenario[]
+  rules: SerializedRule[]
+}
+~~~
+
+The `description` field captures the [description](https://cucumber.io/docs/gherkin/reference#descriptions) placed underneath the `Feature` keyword, before the first `Scenario`, `Background`, or `Rule`.
+
+### [`SerializedScenario`](https://cucumber.io/docs/gherkin/reference#example)
+
+~~~typescript
+interface SerializedScenario {
+  title: string
+  keyword: string        // e.g. "Scenario: Login"
+  tags: string[]
+  steps: SerializedStep[]
+  outline: false
+} | {
+  title: string
+  keyword: string        // e.g. "Scenario Outline: Login with <role>"
+  tags: string[]
+  steps: SerializedStep[]
+  outline: true
+  examples: Record<string, any>[]
+}
+~~~
+
+When `outline` is `true`, the object represents a [`Scenario Outline`](https://cucumber.io/docs/gherkin/reference#scenario-outline) and the `examples` field contains the [`Examples`](https://cucumber.io/docs/gherkin/reference#examples) table rows.
+
+### [`SerializedStep`](https://cucumber.io/docs/gherkin/reference#steps)
+
+~~~typescript
+interface SerializedStep {
+  type: string           // "Given" | "When" | "Then" | "And" | "But"
+  details: string
+  keyword: string
+  docStrings: string | null
+  dataTables: Record<string, string>[]
+}
+~~~
+
+Steps may include [`DocStrings`](https://cucumber.io/docs/gherkin/reference#doc-strings) and [`DataTables`](https://cucumber.io/docs/gherkin/reference#data-tables) as step arguments.
+
+### [`SerializedBackground`](https://cucumber.io/docs/gherkin/reference#background)
+
+~~~typescript
+type SerializedBackground = {
+  keyword: string
+  steps: SerializedStep[]
+} | null
+~~~
+
+Returns `null` when the `Feature` or `Rule` has no `Background`.
+
+### [`SerializedRule`](https://cucumber.io/docs/gherkin/reference#rule)
+
+~~~typescript
+interface SerializedRule {
+  name: string
+  keyword: string
+  description: string
+  tags: string[]
+  background: SerializedBackground
+  scenarii: SerializedScenario[]
+}
+~~~
+
+`Rule` groups scenarii under a single business rule and can have its own `Background`.

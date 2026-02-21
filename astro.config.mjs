@@ -19,6 +19,7 @@ export default defineConfig({
             sidebar: [
                 {
                     label: "Get started",
+                    collapsed: true,
                     items: [
                         {
                             label: "Presentation",
@@ -36,23 +37,19 @@ export default defineConfig({
                             label: "Browser mode",
                             slug: "get-started/browser-mode",
                         },
-                    ],
-                },
-                {
-                    label: "Vitest plugin",
-                    items: [
                         {
-                            label: "Setup",
-                            slug: "plugin/setup",
+                            label: "Gherkin",
+                            slug: "features/gherkin",
                         },
                     ],
                 },
                 {
-                    label: "Features",
+                    label: "Definitions",
+                    collapsed: true,
                     items: [
                         {
-                            label: "Gherkin",
-                            slug: "features/gherkin",
+                            label: "Feature",
+                            slug: "features/feature",
                         },
                         {
                             label: "Scenario",
@@ -60,6 +57,7 @@ export default defineConfig({
                         },
                         {
                             label: "Scenario Outline",
+                            collapsed: true,
                             items: [
                                 {
                                     label: "Use Scenario Outline",
@@ -127,6 +125,24 @@ export default defineConfig({
                         {
                             label: "Tests without feature file",
                             slug: "features/define-feature",
+                        },
+                    ],
+                },
+                {
+                    label: "Integrations",
+                    collapsed: true,
+                    items: [
+                        {
+                            label: "Vitest plugin",
+                            slug: "plugin/setup",
+                        },
+                        {
+                            label: "Astro",
+                            slug: "integrations/astro",
+                        },
+                        {
+                            label: "Serializer",
+                            slug: "integrations/serializer",
                         },
                     ],
                 },
