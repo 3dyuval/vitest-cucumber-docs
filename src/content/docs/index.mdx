@@ -3,36 +3,30 @@ title: vitest-cucumber
 description: Vitest & Gherkin powerred tests
 template: splash
 hero:
-  title: Vitest & Gherkin powerred tests
-  tagline: Scenario, Backgroaund, Rule or DocStrings in your spec files
+  title: vitest-cucumber
+  tagline: Write tests for humans
   image:
     file: ../../assets/logo.png
-  actions:
-    - text: Get started
-      link: /get-started/presentation
-      icon: right-arrow
-    - text: View on Github
-      link: https://github.com/amiceli/vitest-cucumber
-      variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Badge, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## Next steps
+## Get started
 
 <CardGrid stagger>
-	<Card 
-        title="Playground" 
-        icon="codePen"
-    >
-		Try vitest-cucumber with [stackblitz](https://stackblitz.com/github/amiceli/vitest-cucumber-docs/tree/main/examples/basic?embed=1&theme=dark&view=editor&preset=node&startScript=test&file=features/example.feature&file=features/example.spec.ts).
+	<Card title="Read the docs" icon="document">
+		Find out how to use <Badge text="Scenario" /> <Badge text="Background" /> <Badge text="Rule" /> <Badge text="DocStrings" /> in your spec files to make tests **read to humans**.
+
+		[Get started →](/get-started/presentation)
 	</Card>
-	<Card 
-        title="Example projects" 
-        icon="seti:github"
-    >
-		Check [Vue](https://github.com/amiceli/vitest-cucumber-example) and
-        [React](https://github.com/Agriculture-Intelligence/vitest-cucumber_rtl_template)
-        projects using vitest-cucumber
+	<Card title="Example projects" icon="seti:github">
+		Check <Badge text="Vue" /> and <Badge text="React" /> projects using **vitest-cucumber**.
+
+		[All examples →](/examples/vitest)
+	</Card>
+	<Card title="Integrations" icon="puzzle">
+		Use **vitest-cucumber** with <Badge text="Vitest" /> <Badge text="Astro" /> to test and document your *feature* files.
+
+		[All integrations →](/integrations/setup)
 	</Card>
 </CardGrid>

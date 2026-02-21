@@ -3,17 +3,19 @@ title: Presentation
 description: vitest-cucumber goals
 ---
 
-## About vitest-cucumber
+## What is vitest-cucumber
 
-[vitest-cucumber](https://github.com/amiceli/vitest-cucumber) is an **opiniated** tool 
-to write acceptance tests following the Gherkin syntax,
-designed to be used specifically with [Vitest](https://vitest.dev/).
+[vitest-cucumber](https://github.com/amiceli/vitest-cucumber) is an opinionated tool to write acceptance tests following the Gherkin syntax, designed to be used specifically with [Vitest](https://vitest.dev/).
 
-This package was originally inspirated by [jest-cucumber](https://github.com/bencompton/jest-cucumber).
+This package was originally inspired by [jest-cucumber](https://github.com/bencompton/jest-cucumber).
+
+## Who is it for
+
+**vitest-cucumber** is for teams who want tests that read like documentation. If you need to agree on what the software should do before writing code, *feature* files give everyone a shared language.
 
 ## Example
 
-A Gherkin `Feature` is written in a `.feature` file. Example: 
+A Gherkin `Feature` is written in a `.feature` file. Example:
 
 ~~~gherkin
 # example.feature
@@ -26,7 +28,7 @@ Feature: use vitest-cucumber with vitest
         And   I can test my scenarios
 ~~~
 
-You can then use it with **vitest-cucumber**: 
+You can then use it with **vitest-cucumber**:
 
 ~~~ts
 // example-feature.spec.ts
@@ -45,17 +47,10 @@ describeFeature(feature, ({ Scenario }) => {
 })
 ~~~
 
-## Playground
-
-Do not take the word for it, try it out yourself in the following playground.
-
-<iframe 
-    title="vitest-cucumber playground"
-    src="https://stackblitz.com/github/amiceli/vitest-cucumber-docs/tree/main/examples/basic?embed=1&theme=dark&view=editor&preset=node&startScript=test&file=features/example.feature&file=features/example.spec.ts"
-    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-    style="width: 100%; height: 500px;"
-/>
-
 ## Next steps
+
+To understand how **vitest-cucumber** works, you should first familiarise yourself with [Gherkin](/features/gherkin), the language used to write *feature* files.
+
+To try it out right away, check the [Vitest](/examples/vitest), [Vue](/examples/vue) and [React](/examples/react) examples.
 
 If you are interested, you can [install it here](/get-started/install).

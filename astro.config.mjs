@@ -134,7 +134,7 @@ export default defineConfig({
                     items: [
                         {
                             label: "Vitest plugin",
-                            slug: "plugin/setup",
+                            slug: "integrations/setup",
                         },
                         {
                             label: "Astro",
@@ -143,6 +143,28 @@ export default defineConfig({
                         {
                             label: "Serializer",
                             slug: "integrations/serializer",
+                        },
+                    ],
+                },
+                {
+                    label: "Examples",
+                    collapsed: true,
+                    items: [
+                        {
+                            label: "Vitest",
+                            slug: "examples/vitest",
+                        },
+                        {
+                            label: "Vue",
+                            slug: "examples/vue",
+                        },
+                        {
+                            label: "React",
+                            slug: "examples/react",
+                        },
+                        {
+                            label: "Astro",
+                            slug: "examples/astro",
                         },
                     ],
                 },
