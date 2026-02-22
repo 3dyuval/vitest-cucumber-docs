@@ -10,9 +10,29 @@ main {
 }
 
 .main-pane h1 {
-    color: #25d96c;
+    background: linear-gradient(315deg, #25d96c 25%, #41d1ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.site-title {
+    color: #25d96c !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
 .main-pane .hero > img {
     width: 200px;
+}
+
+.sl-link-button.primary {
+    background: #4dba7a;
+    border-color: #4dba7a;
+}
+
+.sl-link-button.primary:hover {
+    background: #43a86e;
+    border-color: #43a86e;
 }

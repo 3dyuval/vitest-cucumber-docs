@@ -1,5 +1,5 @@
 ---
-title: Presentation
+title: Get Started
 description: vitest-cucumber goals
 ---
 
@@ -13,9 +13,11 @@ This package was originally inspired by [jest-cucumber](https://github.com/benco
 
 **vitest-cucumber** is for teams who want tests that read like documentation. If you need to agree on what the software should do before writing code, *feature* files give everyone a shared language.
 
-## Example
+## Gherkin
 
-A Gherkin `Feature` is written in a `.feature` file. Example:
+To use **vitest-cucumber**, you first need to understand [Gherkin](https://cucumber.io/docs/gherkin/reference/). Gherkin is a language for writing structured, human-readable specifications. It uses keywords like `Feature`, `Scenario`, and `Given`/`When`/`Then` to describe how software should behave.
+
+A Gherkin `Feature` is written in a `.feature` file:
 
 ~~~gherkin
 # example.feature
@@ -27,6 +29,8 @@ Feature: use vitest-cucumber with vitest
         Then  My feature file is parsed
         And   I can test my scenarios
 ~~~
+
+## Example
 
 You can then use it with **vitest-cucumber**:
 
@@ -48,8 +52,6 @@ describeFeature(feature, ({ Scenario }) => {
 ~~~
 
 ## Next steps
-
-To understand how **vitest-cucumber** works, you should first familiarise yourself with [Gherkin](/features/gherkin), the language used to write *feature* files.
 
 To try it out right away, check the [Vitest](/examples/vitest), [Vue](/examples/vue) and [React](/examples/react) examples.
 

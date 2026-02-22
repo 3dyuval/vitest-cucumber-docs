@@ -9,6 +9,9 @@ export default defineConfig({
             logo: {
                 src: "src/assets/logo.png",
             },
+            expressiveCode: {
+                themes: ["vitesse-dark", "vitesse-light"],
+            },
             social: [
                 {
                     icon: "github",
@@ -18,11 +21,11 @@ export default defineConfig({
             ],
             sidebar: [
                 {
-                    label: "Get started",
+                    label: "Guide",
                     collapsed: true,
                     items: [
                         {
-                            label: "Presentation",
+                            label: "Get Started",
                             slug: "get-started/presentation",
                         },
                         {
@@ -38,13 +41,13 @@ export default defineConfig({
                             slug: "get-started/browser-mode",
                         },
                         {
-                            label: "Gherkin",
-                            slug: "features/gherkin",
+                            label: "Utilities",
+                            slug: "integrations/utilities",
                         },
                     ],
                 },
                 {
-                    label: "Definitions",
+                    label: "Features",
                     collapsed: true,
                     items: [
                         {
@@ -139,10 +142,6 @@ export default defineConfig({
                         {
                             label: "Astro",
                             slug: "integrations/astro",
-                        },
-                        {
-                            label: "Serializer",
-                            slug: "integrations/serializer",
                         },
                     ],
                 },

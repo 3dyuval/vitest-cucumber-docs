@@ -3,29 +3,30 @@ title: Astro
 description: vitest-cucumber with Astro content collections
 ---
 
-You can use **vitest-cucumber** with [Astro content collections](https://docs.astro.build/en/guides/content-collections/) to generate documentation pages from the same *feature* files your tests use. This guide uses the [serializer](/integrations/serializer).
+You can use **vitest-cucumber** with [Astro content collections](https://docs.astro.build/en/guides/content-collections/) to generate documentation pages from the same *feature* files your tests use. This guide uses [`loadFeatureFromText`](/features/load-feature-from-text) to parse *feature* files into `Feature` objects.
 
 ## Define the content collection
 
-You can use Astro's built-in [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file) with `serializeFeatureFile` as a custom parser:
+You can use Astro's built-in [`file()` loader](https://docs.astro.build/en/reference/content-loader-reference/#file) with `loadFeatureFromText` as a custom parser:
 
 ~~~typescript
 // src/content.config.ts
 import { defineCollection, z } from "astro:content";
 import { file } from "astro/loaders";
 import {
-  serializeFeatureFile,
-  type SerializedFeature,
-} from "@amiceli/vitest-cucumber/serializer";
+  loadFeatureFromText,
+  serializeFeature,
+  type FeatureType,
+} from "@amiceli/vitest-cucumber";
 
 const features = defineCollection({
   loader: file("../path/to/features/**/*.feature", {
     parser: (content) => {
-      const feature = serializeFeatureFile(content);
-      return feature ? [feature] : [];
+      const feature = loadFeatureFromText(content);
+      return [serializeFeature(feature)];
     },
   }),
-  schema: z.custom<SerializedFeature>(),
+  schema: z.custom<FeatureType>(),
 });
 
 export const collections = { features };
@@ -40,7 +41,7 @@ If you need more control (e.g. custom IDs, multiple languages, or filtering), yo
 import type { Loader } from "astro/loaders";
 import { readFile } from "node:fs/promises";
 import { glob as globby } from "glob";
-import { serializeFeatureFile } from "@amiceli/vitest-cucumber/serializer";
+import { loadFeatureFromText, serializeFeature } from "@amiceli/vitest-cucumber";
 
 export function featureLoader(options: {
   pattern: string;
@@ -55,13 +56,12 @@ export function featureLoader(options: {
       for (const file of files) {
         const fullPath = `${options.base}/${file}`;
         const content = await readFile(fullPath, "utf-8");
-        const data = serializeFeatureFile(content, {
+        const feature = loadFeatureFromText(content, {
           language: options.language,
         });
 
-        if (!data) continue;
-
         const id = file.replace(/\.feature$/, "");
+        const data = serializeFeature(feature);
         const parsed = await parseData({ id, data });
         store.set({ id, data: parsed });
       }
@@ -120,7 +120,7 @@ const { name, description, scenarii, background, rules, tags } = feature.data;
   <section>
     <h2>Background</h2>
     <ul>
-      {background.steps.map((s) => <li>{s.keyword} {s.details}</li>)}
+      {background.steps.map((s) => <li>{s.type} {s.details}</li>)}
     </ul>
   </section>
 )}
@@ -129,7 +129,7 @@ const { name, description, scenarii, background, rules, tags } = feature.data;
   <section>
     <h2>{scenario.keyword}</h2>
     <ul>
-      {scenario.steps.map((s) => <li>{s.keyword} {s.details}</li>)}
+      {scenario.steps.map((s) => <li>{s.type} {s.details}</li>)}
     </ul>
   </section>
 ))}
