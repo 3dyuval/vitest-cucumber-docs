@@ -8,4 +8,7 @@ repo: https://github.com/amiceli/vitest-cucumber-docs/tree/main/examples/basic
 
 import ExampleLayout from '../../../components/ExampleLayout.astro'
 
-<ExampleLayout active="vitest" />
+<ExampleLayout
+    src={frontmatter.src}
+    repo={frontmatter.repo}
+/>

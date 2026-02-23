@@ -1,16 +1,23 @@
 import sitemap from "@astrojs/sitemap"
 import starlight from "@astrojs/starlight"
 import { defineConfig } from "astro/config"
+import cssVariablesTheme from "./src/themes/css-variables.json"
 
 export default defineConfig({
+    markdown: {
+        shikiConfig: {
+            theme: cssVariablesTheme,
+        },
+    },
     integrations: [
         starlight({
             title: "vitest-cucumber",
             logo: {
                 src: "src/assets/logo.png",
             },
-            expressiveCode: {
-                themes: ["vitesse-dark", "vitesse-light"],
+            expressiveCode: false,
+            components: {
+                ThemeSelect: "./src/components/ThemeToggle.astro",
             },
             social: [
                 {
@@ -142,6 +149,7 @@ export default defineConfig({
                         {
                             label: "Astro",
                             slug: "integrations/astro",
+                            badge: { text: "New", variant: "success" },
                         },
                     ],
                 },

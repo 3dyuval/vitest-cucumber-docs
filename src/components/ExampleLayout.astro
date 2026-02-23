@@ -1,78 +1,33 @@
 ---
-import { getCollection } from "astro:content"
-
 interface Props {
-    active: string
+    src: string
+    repo?: string
 }
 
-const { active } = Astro.props
-
-const allDocs = await getCollection("docs", (entry) =>
-    entry.id.startsWith("examples/"),
-)
-const current = allDocs.find((e) => e.id === `examples/${active}.mdx`)
+const { src, repo } = Astro.props
 ---
 
-<div class="example-bar">
-    <nav class="example-tabs">
-        {allDocs.map((entry) => {
-            const id = entry.id.replace("examples/", "").replace(".mdx", "")
-            return (
-                <a
-                    href={`/examples/${id}/`}
-                    class:list={["example-tab", { active: id === active }]}
-                >
-                    {entry.data.title}
-                </a>
-            )
-        })}
-    </nav>
-    {current?.data.repo && (
-        <a href={current.data.repo} target="_blank" rel="noopener" class="example-repo">
+{repo && (
+    <div class="example-bar">
+        <a href={repo} target="_blank" rel="noopener" class="example-repo">
             View on GitHub →
         </a>
-    )}
-</div>
-
-{current && (
-    <iframe
-        title={current.data.description}
-        src={current.data.src}
-        sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-        class="example-frame"
-    />
+    </div>
 )}
+
+<iframe
+    title="Example"
+    src={src}
+    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+    class="example-frame"
+/>
 
 <style>
     .example-bar {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--sl-color-gray-5);
+        justify-content: flex-end;
         margin-bottom: 1rem;
-    }
-
-    .example-tabs {
-        display: flex;
-        gap: 0;
-    }
-
-    .example-tab {
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: var(--sl-color-gray-3);
-        border-bottom: 2px solid transparent;
-        font-weight: 500;
-        transition: color 0.2s, border-color 0.2s;
-    }
-
-    .example-tab:hover {
-        color: var(--sl-color-white);
-    }
-
-    .example-tab.active {
-        color: #25d96c;
-        border-bottom-color: #25d96c;
     }
 
     .example-repo {
@@ -83,7 +38,7 @@ const current = allDocs.find((e) => e.id === `examples/${active}.mdx`)
     }
 
     .example-repo:hover {
-        color: var(--sl-color-white);
+        color: var(--sl-color-accent);
     }
 
     .example-frame {

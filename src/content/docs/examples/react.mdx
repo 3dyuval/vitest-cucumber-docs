@@ -8,4 +8,7 @@ repo: https://github.com/Agriculture-Intelligence/vitest-cucumber_rtl_template
 
 import ExampleLayout from '../../../components/ExampleLayout.astro'
 
-<ExampleLayout active="react" />
+<ExampleLayout
+    src={frontmatter.src}
+    repo={frontmatter.repo}
+/>
