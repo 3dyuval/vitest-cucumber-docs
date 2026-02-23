@@ -5,6 +5,7 @@ interface Props {
 }
 
 const { src, repo } = Astro.props
+const baseSrc = src.replace(/&theme=(dark|light)/, '')
 ---
 
 {repo && (
@@ -17,10 +18,29 @@ const { src, repo } = Astro.props
 
 <iframe
     title="Example"
-    src={src}
+    data-base-src={baseSrc}
     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
     class="example-frame"
 />
+
+<script>
+    function syncTheme() {
+        const frame = document.querySelector<HTMLIFrameElement>('.example-frame')
+        if (!frame) return
+        const base = frame.dataset.baseSrc
+        const theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
+        const src = `${base}&theme=${theme}`
+        if (frame.src !== src) frame.src = src
+    }
+
+    syncTheme()
+
+    const observer = new MutationObserver(syncTheme)
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+    })
+</script>
 
 <style>
     .example-bar {
